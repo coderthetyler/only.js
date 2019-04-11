@@ -5,9 +5,8 @@
 
 - [About](#About)
 - [Getting Started](#Getting-Started)
-- [Problem: External Links](#External-Links)
-- [Directives](#Directives)
-- [Modules](#Modules)
+- [How to: Make A Sitemap](#How-to:-Make-A-Sitemap)
+- [How to: External Links](#How-to:-External-Links)
 - [Documentation](#Documentation)
 - [License](#License)
 - [Footnotes](#Footnotes)
@@ -26,7 +25,7 @@ To use only.js, just include the core module.
 
 ## Getting Started
 
-Getting started with only.js is easy!
+Getting started with only.js is easy! A working demo similar to what is created in this section is available [here](https://only.js.tylerdaddio.com).
 
 As we want to use only JS, we'll have a bare-bones `index.html`:
 ```html
@@ -129,6 +128,8 @@ var mysitemap = {
 
 Notice that the `.404` property looks similar to the `..` property: it has a function mapped directly to it. only.js refers to these properties starting with `.` and mapping to a function *directives*. So the `..` directive directs only.js to run that function when the containing page is the target. Similarly, the `.404` directive says what to do when a page cannot be loaded.
 
+For more information on directives like `.404`, see [How to: Make A Sitemap](#How-to:-Make-A-Sitemap).
+
 Also notice that the `.404` directive can receive up to two arguments: a path and an error. The path is the path that was tried. The error is that generated when a page fails to load. Here we are using the path to update `pagecontent` with the page we are trying (unsuccessfully) to load.
 
 With the addition of the `.404` directive, try to load the `about` page again. Type `about` in the `searchbar`, and the `about` page should come up.
@@ -174,7 +175,7 @@ window.onload = () =>
 };
 ```
 
-Unfortunately, some things are out of the control of only.js. The websever may redirect to a special 404 page when the path isn't recognized. The way to fix this is to ensure the served page is always `index.html` and that the URL is preserved. For examples of how to do this, see [External Links](#External-Links).
+Unfortunately, some things are out of the control of only.js. The websever may redirect to a special 404 page when the path isn't recognized. The way to fix this is to ensure the served page is always `index.html` and that the URL is preserved. For examples of how to do this, see [How to: External Links](#How-to:-External-Links).
 
 Here is the final demo code:
 ```js
@@ -219,7 +220,58 @@ window.onload = () =>
 };
 ```
 
-## External links
+
+## How to: Make A Sitemap
+
+As we saw in [Getting Started](#Getting-Started), the sitemap is the centerpiece of only.js. A good sitemap makes a good website.
+
+Sitemaps are objects with only two types of properties: directory and directives. Directories are containers for directives. Directives are functions that describe actions to take under certain circumstances.
+
+### Directories
+
+Directories are containers for directives. A directory is a property mapping to another object. We can create a directory `about` as follows:
+```js
+var sitemap = {
+  "about": {
+    // add directives or other directories here!
+  }
+};
+```
+Directives not in a directory are in the root directory. Directives in the root directory are executed with respect to the base URL `yourdomain.com`, i.e. when no explicit path is in the URL.
+
+A directory is said to be a *target* when the URL's path points to it. For example, `yourdomain.com/about` targets the `about` directory, and `yourdomain.com` targets the root directory.
+
+### Directives
+
+Directives are functions that describe actions to take under certain circumstances. There are five standard directives and one unique directive.
+
+#### `..`
+This is the *page directive*. It is executed when the directory itself is the target. For example, `yourdomain.com/page` is targeting the `page` directory.
+
+#### `./`
+This is the *child directive*. It is executed when a child of the directory itself is the target. For example, see that `yourdomain/page` is targeting the `page` directory, and the `page` is a child of the root directory. So a `./` directive placed at the root will run whenever *any* directory other than the root is the target.
+
+#### `.*`
+This is the *universal directive*. It is executed either when the directory itself or any of its children are the target. So it behaves both like the union of the page directive and the child directive.
+
+#### `.!`
+This is the *termination directive*. It is like the child directive, but it terminates path resolution. The unresolved portion of the path is provided as an argument to the termination directive. This is useful if you want to override the default path resolution behavior.
+
+#### `.404`
+This is the *error directive*. It is executed either when any of the other directives throws an error or when the target does not exist. Only the error directive closest to the target in the sitemap will be executed.
+
+#### `.`
+This is the *ordering directive*. It is the special directive mentioned earlier. The ordering directive is special because it does not map to a function; it maps to an array of strings containing the other directives. For example, it may look like the following:
+```js
+".": [".*", "..", ".!", "./"]
+```
+The ordering directive tells only.js what order you want the directory's directives to be evaluated. The `.404` directive should not be listed in the ordering directive.
+
+If no ordering directive is defined in a directory, the default ordering directive will be used: `[".*", "..", ".!", "./"]`.
+
+
+
+## How to: External Links
 
 Loading `yourdomain.com/about/me` from an external site may not load the page you expect. Most likely, your websever is to blame. For example, it may serve up a special 404 page when the path doesn't exist in the file system of the website. The way to fix this is to ensure the served page is always `index.html` and that the path is preserved in the URL.
 
@@ -248,7 +300,11 @@ If you use different web server/host and know how to solve this problem, please 
 
 
 
-## Modules
+## Documentation
+
+Documentation is always a work-in-progress. Provided here are the public functions and variables provided by only.js and its modules.
+
+### Modules
 
 only.js has optional modules available to make the task of creating your sitemap-driven website even easier. Just include the relevant `only-*.js` in your HTML, and enjoy!
 
@@ -256,12 +312,6 @@ only.js has optional modules available to make the task of creating your sitemap
 - [tabs](#tabs) - For easily managing links to root pages!
 - [journals](#journals) - For using JSON to power streams of objects!
 - [utils](#utils) - For some useful functions!
-
-
-
-## Documentation
-
-Documentation is always a work-in-progress. Provided here are the public functions and variables provided by only.js and its modules.
 
 ### core
 
