@@ -5,8 +5,8 @@
 
 - [About](#About)
 - [Getting Started](#Getting-Started)
-- [How to: Make A Sitemap](#How-to:-Make-A-Sitemap)
-- [How to: External Links](#How-to:-External-Links)
+- [How to: Make A Sitemap](#How-to-Make-A-Sitemap)
+- [How to: External Links](#How-to-External-Links)
 - [Documentation](#Documentation)
 - [License](#License)
 - [Footnotes](#Footnotes)
@@ -128,7 +128,7 @@ var mysitemap = {
 
 Notice that the `.404` property looks similar to the `..` property: it has a function mapped directly to it. only.js refers to these properties starting with `.` and mapping to a function *directives*. So the `..` directive directs only.js to run that function when the containing page is the target. Similarly, the `.404` directive says what to do when a page cannot be loaded.
 
-For more information on directives like `.404`, see [How to: Make A Sitemap](#How-to:-Make-A-Sitemap).
+For more information on directives like `.404`, see [How to: Make A Sitemap](#How-to-Make-A-Sitemap).
 
 Also notice that the `.404` directive can receive up to two arguments: a path and an error. The path is the path that was tried. The error is that generated when a page fails to load. Here we are using the path to update `pagecontent` with the page we are trying (unsuccessfully) to load.
 
@@ -175,7 +175,7 @@ window.onload = () =>
 };
 ```
 
-Unfortunately, some things are out of the control of only.js. The websever may redirect to a special 404 page when the path isn't recognized. The way to fix this is to ensure the served page is always `index.html` and that the URL is preserved. For examples of how to do this, see [How to: External Links](#How-to:-External-Links).
+Unfortunately, some things are out of the control of only.js. The websever may redirect to a special 404 page when the path isn't recognized. The way to fix this is to ensure the served page is always `index.html` and that the URL is preserved. For examples of how to do this, see [How to: External Links](#How-to-External-Links).
 
 Here is the final demo code:
 ```js
