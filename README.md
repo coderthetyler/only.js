@@ -14,8 +14,9 @@
 
 
 ## About
+[(back to top)](#onlyjs)
 
-only.js is a simple JS library for making sitemap-driven websites. It is written entirely using native JavaScript. No dependencies, and no requirement to use any particular framework. Only you; Only JS™. †
+only.js is a lightweight JS framework for making sitemap-driven websites. It is written entirely using native JavaScript. No dependencies, and no requirement to use any other frameworks or libraries. Only you; Only JS™. †
 
 To use only.js, just include the core module.
 ```html
@@ -24,6 +25,7 @@ To use only.js, just include the core module.
 
 
 ## Getting Started
+[(back to top)](#onlyjs)
 
 Getting started with only.js is easy! A working demo similar to what is created in this section is available [here](https://only.js.tylerdaddio.com).
 
@@ -222,6 +224,7 @@ window.onload = () =>
 
 
 ## How to: Make A Sitemap
+[(back to top)](#onlyjs)
 
 As we saw in [Getting Started](#Getting-Started), the sitemap is the centerpiece of only.js. A good sitemap makes a good website.
 
@@ -272,6 +275,7 @@ If no ordering directive is defined in a directory, the default ordering directi
 
 
 ## How to: External Links
+[(back to top)](#onlyjs)
 
 Loading `yourdomain.com/about/me` from an external site may not load the page you expect. Most likely, your websever is to blame. For example, it may serve up a special 404 page when the path doesn't exist in the file system of the website. The way to fix this is to ensure the served page is always `index.html` and that the path is preserved in the URL.
 
@@ -301,6 +305,7 @@ If you use different web server/host and know how to solve this problem, please 
 
 
 ## Documentation
+[(back to top)](#onlyjs)
 
 Documentation is always a work-in-progress. Provided here are the public functions and variables provided by only.js and its modules.
 
@@ -381,10 +386,13 @@ Removes all children from a DOM node, if any.
 
 
 ## License
+[(back to top)](#onlyjs)
+
 See the [License](/LICENSE).
 
 
 
 ## Footnotes
+[(back to top)](#onlyjs)
 
 †: Not actually trademarked.
