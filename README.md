@@ -7,7 +7,7 @@
 - [Examples](#Examples)
 - [Getting Started](#Getting-Started)
 - [How to: Make A Sitemap](#How-to-Make-A-Sitemap)
-- [How to: Remove ? From URLs](#How-to-Remove-From-URLs)
+- [How to: Remove ? From URLs](#How-to-Remove-?-From-URLs)
 - [Documentation](#Documentation)
 - [License](#License)
 - [Footnotes](#Footnotes)
@@ -215,7 +215,7 @@ Now try typing `yourdomain.com/?/about/me` into your browser search bar and hit 
 
 Notice that the URL has a question mark (?) in it. This is because most web servers and hosts will give a 404 response when a path is not recognized. Using a query (search) string to specify a path will ensure `index.html` is always loaded.
 
-Unforunately, the sight of a `/?/` in your URL may make you gag. Fortunately, there are ways to fix this. To do so, see [How to: Remove ? From URLs](#How-to-Remove-From-URLs).
+Unforunately, the sight of a `/?/` in your URL may make you gag. Fortunately, there are ways to fix this. To do so, see [How to: Remove ? From URLs](#How-to-Remove-?-From-URLs).
 
 Here is the final demo code:
 ```js
