@@ -218,7 +218,7 @@ document.body.appendChild(pagecontent);
 
 window.onload = () =>
 {
-  only.load(window.location.search);
+  only.load(window.location.pathname);
 };
 ```
 
@@ -360,7 +360,7 @@ The object containing everything in the only.journals module.
 Initializes the only.journals module. This **must** be invoked before using any functionality of only.journals and after invoking `only.init`.
 
 ##### `only.journals.create(name, url)`
-Creates a new journal with the given name. The URL specifies the location of the JSON representing the journal. This function does not fetch from the URL. To do so, see [`only.journals.update`](#`only.journals.update(name)`).
+Creates a new journal with the given name. The URL specifies the location of the JSON representing the journal. This function does not fetch from the URL. To do so, see [`only.journals.update`](#`only.journals.updatename`).
 
 ##### `only.journals.update(name)`
 Fetches the JSON living at the URL provided upon journal creation. This is used to update the internal representation of the journal.
@@ -378,7 +378,7 @@ The object containing everything in the only.utils module.
 Fetches from a URL optionally caching the response received. Upon invokation with a novel URL, an actual fetch is performed, but upon subsequent invokations with the same URL, a clone of the original `Response` is returned as long as `useCache` is not set to `false`.
 
 ##### `only.utils.fetchAndFill(url, node, useCache=true)`
-Fetches from a URL, gets the text from the body of the response, then sets the inner HTML of the node. This function uses [`only.utils.fetch`](#`only.utils.fetch(url,-useCache=true)`) under the hood and so also can cache the received `Response`.
+Fetches from a URL, gets the text from the body of the response, then sets the inner HTML of the node. This function uses [`only.utils.fetch`](#`only.utils.fetchurl-useCachetrue`) under the hood and so also can cache the received `Response`.
 
 ##### `only.utils.emptyNode(node)`
 Removes all children from a DOM node, if any.
