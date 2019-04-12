@@ -61,8 +61,6 @@ only.load = (initPath, shouldPush=true) => {
 	}, Promise.resolve())
 	.catch((err) => {
 		return Promise.resolve(func404(finalPath, err));
-	}).then(() => {
-		console.log("done");
 	});
 };
 
