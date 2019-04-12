@@ -19,11 +19,17 @@ only.maketitle = (path) =>
 
 only.shouldUseSearchURLFormatting = true;
 
-only.load = (initPath, shouldPush=true) => {
+only.load = (initPath, shouldPush=true) =>
+{
 	/* Break stringified path into array representation. */
 	if(typeof initPath === "string")
 		initPath = initPath.split("/").filter(Boolean);
 
+	/* Remove the search ? from the URL, if present. */
+	if(initPath[0].startsWith("?")) {
+		initPath = initPath.slice(1);
+	}
+	
 	let result = onlyjs_getFunctionQueue(initPath);
 	let queue = result.queue;
 	let func404 = result.func404;
