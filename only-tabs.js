@@ -33,12 +33,12 @@ only.tabs.init = (sitemap, tabBuilder) =>
 	 * to make tabs. */
 	for(var i = 0; i < onlyjs_tabList.length; i++) {
 		let tabName = onlyjs_tabList[i];
-		let onclick = (e) => {
+		let action = (e) => {
 			only.load(tabName);
 		}
 		onlyjs_tabList[i] = {
 			"name": tabName,
-			"onclick": onclick,
+			"action": action,
 			"selected": false
 		};
 		tabBuilder(onlyjs_tabList[i]);
