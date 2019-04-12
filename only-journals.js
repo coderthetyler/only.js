@@ -46,22 +46,22 @@ only.journals.update = (name) => {
  * @param caseSensitive  Should the search be case sensitive.
  */
 only.journals.search = (name, searchTerm, toSearch, caseSensitive=false) => {
-	var entries = only.journals[name].json;
+	let entries = only.journals[name].json;
 
-	var numResults = 0;
-	var results = [];
+	let numResults = 0;
+	let results = [];
 
 	/* Force search term to lower case. */
 	if(!caseSensitive)
 		searchTerm = searchTerm.toLowerCase();
 	
 	for(var entryPath in entries) {
-		var entry = entries[entryPath];
-		var isAMatch = false;
+		let entry = entries[entryPath];
+		let isAMatch = false;
 
 		for(var i = 0; i < toSearch.length && !isAMatch; i++) {
-			var field = toSearch[i];
-			var value = entry[field];
+			let field = toSearch[i];
+			let value = entry[field];
 			if(value)
 				isAMatch = onlyjs_search(value, searchTerm, caseSensitive);
 		}
@@ -76,9 +76,9 @@ only.journals.search = (name, searchTerm, toSearch, caseSensitive=false) => {
  * the detailed work of determining if a given entry field value matches a
  * search term. It currently works with strings and arrays of strings only.
  */
-var onlyjs_search = (value, searchTerm, caseSensitive) =>
+let onlyjs_search = (value, searchTerm, caseSensitive) =>
 {
-	var isAMatch = false;
+	let isAMatch = false;
 	if(value instanceof Array) {
 		for(var i = 0; i < value.length && !isAMatch; i++) {
 			isAMatch = onlyjs_search(value[i], searchTerm);

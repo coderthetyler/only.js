@@ -13,8 +13,7 @@ var cache = {};
  */
 only.utils.fetch = (url, useCache=true) => {
 	if(url in cache && useCache) {
-		var resp = cache[url];
-		return Promise.resolve(resp.clone());
+		return Promise.resolve(cache[url].clone());
 	}
 	return fetch(url)
 	.then(resp => {

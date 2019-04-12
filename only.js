@@ -22,10 +22,10 @@ only.load = (initPath, shouldPush=true) => {
 	if(typeof initPath === "string")
 		initPath = initPath.split("/").filter(Boolean);
 
-	var result = onlyjs_getFunctionQueue(initPath);
-	var queue = result.queue;
-	var func404 = result.func404;
-	var finalPath = result.path;
+	let result = onlyjs_getFunctionQueue(initPath);
+	let queue = result.queue;
+	let func404 = result.func404;
+	let finalPath = result.path;
 
 	/* Select the correct tab, if any. */
 	if(only.tabs)
@@ -36,16 +36,16 @@ only.load = (initPath, shouldPush=true) => {
 
 	/* Push the page to the browser history, if necessary. */
 	if(shouldPush) {
-		var finalPathStr = finalPath.join("/");
+		let finalPathStr = finalPath.join("/");
 		window.history.pushState({
 			"path": finalPath
 		}, document.title, "/"+finalPathStr);
 	}
 
 	/* Transform queue into array of functions returning promises. */
-	var funcs = queue.map((e) => {
+	let funcs = queue.map((e) => {
 		return () => {
-			var promise;
+			let promise;
 			if("error" in e) {
 				promise = Promise.reject(e.error);
 			}else{
@@ -64,58 +64,58 @@ only.load = (initPath, shouldPush=true) => {
 	});
 };
 
-var onlyjs_sitemap = {
+let onlyjs_sitemap = {
 	"..": () => {
 		document.write("Welcome to only.js!");
 	}
 };
 
-var onlyjs_titleFunc = (path) => {
+let onlyjs_titleFunc = (path) => {
 	return "only.js | " + path.join("/");
 };
 
 /**
  * Determines the default order of directive resolution.
  */
-var onlyjs_defaultDirectiveResolutionOrder = [
+let onlyjs_defaultDirectiveResolutionOrder = [
 	".*", "..", ".!", "./"
 ];
 
 /**
  * The default 404 exception to raise when the function queue fails to build.
  */
-var onlyjs_default404Error = 
+let onlyjs_default404Error = 
 	Error("404 page not found.");
 
 /**
  * The default 404 directive if none is given.
  */
-var onlyjs_default404 = (path, err) => {
+let onlyjs_default404 = (path, err) => {
 	document.body.innerHTML = err.message;
 };
 
 /**
  * Returns an array of functions queued up while threading the given path.
  */
-var onlyjs_getFunctionQueue = (path) =>
+let onlyjs_getFunctionQueue = (path) =>
 {
 	path = path.slice();  //copy of the path to manipulate locally
 
 	/* Return values. */
-	var queue = [];
-	var finalPath = path.slice();
+	let queue = [];
+	let finalPath = path.slice();
 
-	var done = false;  // used to terminate threading prematurely
-	var did404 = false;
+	let done = false;  // used to terminate threading prematurely
+	let did404 = false;
 
 	/* Useful local vars. */
-	var last404 = onlyjs_default404;
-	var currentPage = "~";
-	var sitemap = onlyjs_sitemap;
+	let last404 = onlyjs_default404;
+	let currentPage = "~";
+	let sitemap = onlyjs_sitemap;
 
 	/* Thread, thread, thread! */
 	while(currentPage && !done) {
-		var isTarget = (path.length == 0);
+		let isTarget = (path.length == 0);
 
 		/* A 404 occurs only if the current page could not be threaded through 
 		 * the sitemap or if the current page is a target but does not have 
@@ -133,14 +133,14 @@ var onlyjs_getFunctionQueue = (path) =>
 			done = true;
 		}else{
 			/* Use the page directive ordering, if one exists. */
-			var order = onlyjs_defaultDirectiveResolutionOrder;
+			let order = onlyjs_defaultDirectiveResolutionOrder;
 			if("." in sitemap)
 				order = sitemap["."];
 
 			/* Evaluate directives as necessary. */
 			for(var i = 0; i < order.length; i++) {
 				if((order[i] === "..") && isTarget && (".." in sitemap)) {
-					var value = sitemap[".."];
+					let value = sitemap[".."];
 					/* Redirect if necessary. */
 					if(typeof value === "string")
 						return onlyjs_getFunctionQueue(
@@ -156,7 +156,7 @@ var onlyjs_getFunctionQueue = (path) =>
 					done = true; // .! terminates threading
 				}
 			}
-
+			
 			/* Thread further into the sitemap, if not already at the target. */
 			currentPage = path.shift();
 			if(!isTarget)
