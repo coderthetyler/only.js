@@ -16,12 +16,35 @@
 ## About
 [(back to top)](#onlyjs)
 
-only.js is a lightweight JS framework for making sitemap-driven websites. It is written entirely using native JavaScript. No dependencies, and no requirement to use any other frameworks or libraries. Only you; Only JS™. †
+only.js is a lightweight JS framework for building sitemap-driven websites. It is written with native JavaScript only. No dependencies, and no requirement to use any other frameworks or libraries. Only you; Only JS™. †
 
-To use only.js, just include the core module.
-```html
-<script src="only.js"></script>
+The only.js gimmick is sitemaps. To create your site, all you do is create a sitemap:
+```js
+var sitemap = {
+  '..': () => {  // do stuff to load root page here },
+  '.404': () => { // do stuff to handle a 404 response here },
+  'about': {
+    '..': () => { // do stuff to load /about page here },
+    '.*': () => { // do stuff whenever /about or /about/* is loaded },
+    'me': {
+      '..': () => { // do stuff to load /about/me page here }
+    }
+  },
+  'blog': {
+    '..': () => { // do stuff to load /blog here },
+    '.404': () => { // do something different if 404'ing on /blog/* }
+  }
+};
 ```
+Give the sitemap to only.js:
+```js
+only.init(sitemap);
+```
+Then load whichever pages you want!
+```js
+only.load('about/me');
+```
+It's simple, easy, and powerful!
 
 
 ## Getting Started
