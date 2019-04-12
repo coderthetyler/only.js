@@ -17,6 +17,8 @@ only.maketitle = (path) =>
 	return "only.js | " + path.join("/");
 };
 
+only.shouldUseSearchURLFormatting = true;
+
 only.load = (initPath, shouldPush=true) => {
 	/* Break stringified path into array representation. */
 	if(typeof initPath === "string")
@@ -37,9 +39,14 @@ only.load = (initPath, shouldPush=true) => {
 	/* Push the page to the browser history, if necessary. */
 	if(shouldPush) {
 		let finalPathStr = finalPath.join("/");
+		if(only.shouldUseSearchURLFormatting) {
+			finalPathStr = "/?/" + finalPathStr;
+		}else {
+			finalPathStr = "/" + finalPathStr;
+		}
 		window.history.pushState({
 			"path": finalPath
-		}, document.title, "/"+finalPathStr);
+		}, document.title, finalPathStr);
 	}
 
 	/* Transform queue into array of functions returning promises. */
@@ -55,7 +62,7 @@ only.load = (initPath, shouldPush=true) => {
 		}
 	});
 
-	/* Evaluate all promises in order. */
+	/* Reduce all promises to a single .then() chain and return. */
 	return funcs.reduce((promise, func) => {
 		return promise.then(func);
 	}, Promise.resolve())
