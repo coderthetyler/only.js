@@ -49,18 +49,20 @@ only.load = (initPath, shouldPush=true) => {
 			if("error" in e) {
 				promise = Promise.reject(e.error);
 			}else{
-				promise = Promise.resolve(e.func(e.path))
+				promise = Promise.resolve(e.func(e.path));
 			}
 			return promise;
 		}
 	});
 
 	/* Evaluate all promises in order. */
-	funcs.reduce((promise, func) => {
+	return funcs.reduce((promise, func) => {
 		return promise.then(func);
 	}, Promise.resolve())
 	.catch((err) => {
 		return Promise.resolve(func404(finalPath, err));
+	}).then(() => {
+		console.log("done");
 	});
 };
 
