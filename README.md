@@ -26,7 +26,9 @@ To use only.js, just include the core module.
 
 ## Getting Started
 [(back to top)](#onlyjs)
-
+<details>
+<summary>Expand me!</summary>
+  
 Getting started with only.js is easy! A working demo similar to what is created in this section is available [here](https://only.js.tylerdaddio.com).
 
 As we want to use only JS, we'll have a bare-bones `index.html`:
@@ -221,16 +223,23 @@ window.onload = () =>
   only.load(window.location.pathname);
 };
 ```
+</details>
 
 
 ## How to: Make A Sitemap
 [(back to top)](#onlyjs)
+
+<details>
+<summary>Expand me!</summary>
 
 As we saw in [Getting Started](#Getting-Started), the sitemap is the centerpiece of only.js. A good sitemap makes a good website.
 
 Sitemaps are objects with only two types of properties: directory and directives. Directories are containers for directives. Directives are functions that describe actions to take under certain circumstances.
 
 ### Directories
+
+<details>
+<summary>Expand me!</summary>
 
 Directories are containers for directives. A directory is a property mapping to another object. We can create a directory `about` as follows:
 ```js
@@ -243,8 +252,12 @@ var sitemap = {
 Directives not in a directory are in the root directory. Directives in the root directory are executed with respect to the base URL `yourdomain.com`, i.e. when no explicit path is in the URL.
 
 A directory is said to be a *target* when the URL's path points to it. For example, `yourdomain.com/about` targets the `about` directory, and `yourdomain.com` targets the root directory.
+</details>
 
 ### Directives
+
+<details>
+<summary>Expand me!</summary>
 
 Directives are functions that describe actions to take under certain circumstances. There are five standard directives and one unique directive.
 
@@ -271,11 +284,15 @@ This is the *ordering directive*. It is the special directive mentioned earlier.
 The ordering directive tells only.js what order you want the directory's directives to be evaluated. The `.404` directive should not be listed in the ordering directive.
 
 If no ordering directive is defined in a directory, the default ordering directive will be used: `[".*", "..", ".!", "./"]`.
-
+</details>
+</details>
 
 
 ## How to: External Links
 [(back to top)](#onlyjs)
+
+<details>
+<summary>Expand me!</summary>
 
 Loading `yourdomain.com/about/me` from an external site may not load the page you expect. Most likely, your websever is to blame. For example, it may serve up a special 404 page when the path doesn't exist in the file system of the website. The way to fix this is to ensure the served page is always `index.html` and that the path is preserved in the URL.
 
@@ -285,6 +302,9 @@ This section details how to make this happen using a variety of web servers/host
 - [Others?](#Others?)
 
 ### FastMail
+
+<details>
+<summary>Expand me!</summary>
 
 FastMail lets you place a `404.html` file in the root directory of the website folder. This page is served whenever a path is not recognized. In `404.html`, add the following script:
 ```js
@@ -297,15 +317,20 @@ if(window.location.search !== "")
   path = window.location.search.split("?page=")[1];
 only.load(path);
 ```
+</details>
 
 ### Others?
 
 If you use different web server/host and know how to solve this problem, please contribute!
 
+</details>
 
 
 ## Documentation
 [(back to top)](#onlyjs)
+
+<details>
+<summary>Expand me!</summary>
 
 Documentation is always a work-in-progress. Provided here are the public functions and variables provided by only.js and its modules.
 
@@ -320,6 +345,9 @@ only.js has optional modules available to make the task of creating your sitemap
 
 ### core
 
+<details>
+<summary>Expand me!</summary>
+
 ##### `only`
 The object containing everything only.js needs and provides.
 
@@ -331,9 +359,13 @@ Provide a function to use when changing the window title following a page load.
 
 ##### `only.load(path)`
 Loads the given path.
+</details>
 
 
 ### tabs
+
+<details>
+<summary>Expand me!</summary>
 
 ##### `only.tabs`
 The object containing everything in the only.tabs module.
@@ -349,9 +381,12 @@ The function to invoke when a tab is selected.
 
 ##### `only.tabs.ondeselect = function(tabObj)`
 The function to invoked when a tab is deselected.
-
+</details>
 
 ### journals
+
+<details>
+<summary>Expand me!</summary>
 
 ##### `only.journals`
 The object containing everything in the only.journals module.
@@ -367,9 +402,12 @@ Fetches the JSON living at the URL provided upon journal creation. This is used 
 
 ##### `only.journals.search(name, searchTerm, toSearch, caseSensitive=false)`
 Searches all entries in the journal's current JSON for the search term. Only those properties provided in the `toSearch` array are searched within each entry, and only `string`s and arrays of `string`s are searched. The search can be made case-sensitive by setting `caseSensitive` to `true`.
-
+</details>
 
 ### utils
+
+<details>
+<summary>Expand me!</summary>
 
 ##### `only.utils`
 The object containing everything in the only.utils module.
@@ -382,7 +420,9 @@ Fetches from a URL, gets the text from the body of the response, then sets the i
 
 ##### `only.utils.emptyNode(node)`
 Removes all children from a DOM node, if any.
+</details>
 
+</details>
 
 
 ## License
