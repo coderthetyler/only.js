@@ -7,7 +7,7 @@
 - [Examples](#Examples)
 - [Getting Started](#Getting-Started)
 - [How to: Make A Sitemap](#How-to-Make-A-Sitemap)
-- [How to: External Links](#How-to-External-Links)
+- [How to: Remove ? From URLs](#How-to-Remove-From-URLs)
 - [Documentation](#Documentation)
 - [License](#License)
 - [Footnotes](#Footnotes)
@@ -140,7 +140,7 @@ document.body.appendChild(searchbar);
 document.body.appendChild(pagecontent);
 ```
 
-(It should be tempting to desire a DOM API less bulky than that offered with native JS. [d3.js](https://d3js.org) is one popular, feature-rich alternative. Of course, you could also put all the HTML stuff in your HTML files, but that wouldn't be Only JS™. †)
+(Using `document.body.appendChild` and `document.createElement` may seem very unwieldy, and it is. To make DOM manipulation a breeze, try using one of the many frameworks out there. [d3.js](https://d3js.org) is one popular and feature-rich framework. open.js does not provide any such functionality as that is outside of its scope.)
 
 Now just change those calls to `document.body` to `pagecontent`, and give it a try! Type in `about`, and... `404 page not found`? What? Where did my searchbar go?
 
@@ -165,7 +165,7 @@ var mysitemap = {
 
 Notice that the `.404` property looks similar to the `..` property: it has a function mapped directly to it. only.js refers to these properties starting with `.` and mapping to a function *directives*. So the `..` directive directs only.js to run that function when the containing page is the target. Similarly, the `.404` directive says what to do when a page cannot be loaded.
 
-For more information on directives like `.404`, see [How to: Make A Sitemap](#How-to-Make-A-Sitemap).
+For more information on `.404` and directives like it, see [How to: Make A Sitemap](#How-to-Make-A-Sitemap).
 
 Also notice that the `.404` directive can receive up to two arguments: a path and an error. The path is the path that was tried. The error is that generated when a page fails to load. Here we are using the path to update `pagecontent` with the page we are trying (unsuccessfully) to load.
 
@@ -198,9 +198,9 @@ var mysitemap = {
 };
 ```
 
-Now try typing both `about/me` and `about/you` into the `searchbar`. Each page should load once its full path is typed.
+Now try typing both `about/me` and `about/you` into `searchbar`. Each page should load once its full path is typed.
 
-Wait, before you go! One more thing: notice that the URL in the browser is changing when we type in our searchbar. This occurs because only.js modifies the browser's history to simulate what normally happens when following hyperlinks. Yes, the website is fully navigable using the back and forward arrows.
+Wait, before you go: one more thing! Notice that the URL in the browser is changing when we type in our searchbar. This occurs because only.js modifies the browser's history to simulate what normally happens when following hyperlinks. Yes, the website is fully navigable using the back and forward arrows.
 
 However, notice that we cannot yet go directly to any page just using the URL. Try it: refresh the page after typing `about` into the `searchbar`. Things will probably get weird.
 
@@ -208,11 +208,14 @@ To fix this problem, we need to ensure we open the correct page when the window 
 ```js
 window.onload = () =>
 {
-  only.load(window.location.pathname);
+  only.load(window.location.search);
 };
 ```
+Now try typing `yourdomain.com/?/about/me` into your browser search bar and hit enter. Your `about/me` page should load!
 
-Unfortunately, some things are out of the control of only.js. The websever may redirect to a special 404 page when the path isn't recognized. The way to fix this is to ensure the served page is always `index.html` and that the URL is preserved. For examples of how to do this, see [How to: External Links](#How-to-External-Links).
+Notice that the URL has a question mark (?) in it. This is because most web servers and hosts will give a 404 response when a path is not recognized. Using a query (search) string to specify a path will ensure `index.html` is always loaded.
+
+Unforunately, the sight of a `/?/` in your URL may make you gag. Fortunately, there are ways to fix this. To do so, see [How to: Remove ? From URLs](#How-to-Remove-From-URLs).
 
 Here is the final demo code:
 ```js
@@ -253,7 +256,7 @@ document.body.appendChild(pagecontent);
 
 window.onload = () =>
 {
-  only.load(window.location.pathname);
+  only.load(window.location.search);
 };
 ```
 </details>
@@ -284,7 +287,7 @@ var sitemap = {
 ```
 Directives not in a directory are in the root directory. Directives in the root directory are executed with respect to the base URL `yourdomain.com`, i.e. when no explicit path is in the URL.
 
-A directory is said to be a *target* when the URL's path points to it. For example, `yourdomain.com/about` targets the `about` directory, and `yourdomain.com` targets the root directory.
+A directory is said to be a *target* when the URL's path points to it. For example, `yourdomain.com/?/about` targets the `about` directory, and `yourdomain.com` targets the root directory.
 </details>
 
 ### Directives
@@ -321,15 +324,19 @@ If no ordering directive is defined in a directory, the default ordering directi
 </details>
 
 
-## How to: External Links
+## How to: Remove ? From URLs
 [(back to top)](#onlyjs)
 
 <details>
 <summary>Expand me!</summary>
 
-Loading `yourdomain.com/about/me` from an external site may not load the page you expect. Most likely, your websever is to blame. For example, it may serve up a special 404 page when the path doesn't exist in the file system of the website. The way to fix this is to ensure the served page is always `index.html` and that the path is preserved in the URL.
+Loading `yourdomain.com/about/me` from an external site may not load the page you expect. Most likely, your websever is to blame. For example, it may serve up a special 404 page when the path doesn't exist in the file system of the website.
 
-This section details how to make this happen using a variety of web servers/hosts.
+To accomodate this, only.js represents the path as a query (search) string in the URL. For example, it uses `youdomain.com/?/about/me` instead of `yourdomain.com/about/me`. The question mark (?) can be removed by setting `only.shouldUseSearchURLFormatting` to `false` before invoking `only.init`. However, this doesn't fix the problem of accessing a page via an external link or page refresh. For example, trying to load `yourdomain.com/about/me` still won't work.
+
+To fix this problem, you'll need to ensure the served page is always your `index.html` and that the path is preserved in the URL. Once that is done, you can change your first page load from `only.load(window.location.search)` to `only.load(window.location.pathname)`.
+
+This section details how to make this happen using a few different servers/hosts:
 
 - [FastMail](#FastMail)
 - [Others?](#Others?)
