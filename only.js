@@ -26,7 +26,7 @@ only.load = (initPath, shouldPush=true) =>
 		initPath = initPath.split("/").filter(Boolean);
 
 	/* Remove the search ? from the URL, if present. */
-	if(initPath[0].startsWith("?")) {
+	if(initPath.length > 0 && initPath[0].startsWith("?")) {
 		initPath = initPath.slice(1);
 	}
 	
